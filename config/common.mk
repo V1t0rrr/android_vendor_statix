@@ -7,7 +7,7 @@
 include vendor/statix/build/core/vendor/*.mk
 
 # Conditionally call QCOM makefiles
-ifeq ($(PRODUCT_USES_QCOM_HARDWARE), true)
+ifeq ($(BOARD_USES_QCOM_HARDWARE), true)
 include vendor/statix/build/core/ProductConfigQcom.mk
 endif
 

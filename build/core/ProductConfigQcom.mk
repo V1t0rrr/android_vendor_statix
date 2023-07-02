@@ -77,7 +77,7 @@ ifeq ($(call is-board-platform-in-list, $(UM_5_10_FAMILY)),true)
 endif
 
 # Enable Gralloc4 on UM platforms that support it
-ifneq ($(filter $(UM_5_4_FAMILY) $(UM_5_10_FAMILY),$(PRODUCT_BOARD_PLATFORM)),)
+ifneq ($(filter $(UM_5_4_FAMILY) $(UM_5_10_FAMILY),$(TARGET_BOARD_PLATFORM)),)
     SOONG_CONFIG_qtidisplay_gralloc4 := true
 endif
 
@@ -85,7 +85,7 @@ endif
 MASTER_SIDE_CP_TARGET_LIST := msm8996 $(UM_4_4_FAMILY) $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY) $(UM_5_4_FAMILY) $(UM_5_10_FAMILY)
 
 # Every qcom platform is considered a vidc target
-MSM_VIDC_TARGET_LIST := $(PRODUCT_BOARD_PLATFORM)
+MSM_VIDC_TARGET_LIST := $(TARGET_BOARD_PLATFORM)
 
 ifeq ($(call is-board-platform-in-list, $(UM_4_4_FAMILY)),true)
     QCOM_HARDWARE_VARIANT := msm8998
@@ -100,7 +100,7 @@ else ifeq ($(call is-board-platform-in-list, $(UM_5_4_FAMILY)),true)
 else ifeq ($(call is-board-platform-in-list, $(UM_5_10_FAMILY)),true)
     QCOM_HARDWARE_VARIANT := sm8450
 else
-    QCOM_HARDWARE_VARIANT := $(PRODUCT_BOARD_PLATFORM)
+    QCOM_HARDWARE_VARIANT := $(TARGET_BOARD_PLATFORM)
 endif
 
 # Allow a device to manually override which HALs it wants to use
@@ -141,14 +141,14 @@ PRODUCT_SOONG_NAMESPACES += \
 endif
 
 # Add display-commonsys and display for non-GKI platforms
-ifneq ($(filter $(UM_NO_GKI_PLATFORMS),$(PRODUCT_BOARD_PLATFORM)),)
+ifneq ($(filter $(UM_NO_GKI_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
 PRODUCT_SOONG_NAMESPACES += \
     vendor/qcom/opensource/commonsys/display
 endif
 
 # Add data-ipa-cfg-mgr to PRODUCT_SOONG_NAMESPACES if needed
 ifneq ($(USE_DEVICE_SPECIFIC_DATA_IPA_CFG_MGR),true)
-ifneq ($(filter $(UM_NO_GKI_PLATFORMS),$(PRODUCT_BOARD_PLATFORM)),)
+ifneq ($(filter $(UM_NO_GKI_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
     PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/data-ipa-cfg-mgr-nogki
 else
     PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/data-ipa-cfg-mgr
